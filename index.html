@@ -1,3 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14284B">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Drink'In Livery: versión de prueba con datos de muestra.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Drink'In">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<style>
+/* base que en el artifact pone el publicador: márgenes seguros del celular */
+html{color-scheme:light}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
 <title>Drink'In Livery</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap">
@@ -756,7 +779,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 /*DATA_START*/
 const TZ='America/Argentina/Buenos_Aires';
 const DEF_CFG={
-  whatsapp:'5492230000000', alias:'drinkin.livery (de muestra)', pin:'1234', personas:[{id:'gon',n:'Gonza',pin:'2882',admin:true},{id:'manu',n:'Manu',pin:'8642',admin:false}], riders:[{id:'tomi',n:'Tomi',pin:'2468',pago:'entrega',tarifa:1500,cubre:['Noche']}],
+  whatsapp:'5492230000000', alias:'drinkin.livery (de muestra)', pin:'1234', personas:[{id:'gon',n:'Gonza',pin:'1111',admin:true},{id:'manu',n:'Manu',pin:'2222',admin:false}], riders:[{id:'tomi',n:'Tomi',pin:'2468',pago:'entrega',tarifa:1500,cubre:['Noche']}],
   minimo:10000, descuento:8, envioCerca:3000, envioLejos:5000, stockBajo:3,
   vencDias:14, ventanaDias:7, pisoPct:20, gananciaNoche:0, nochesReal:7, mpComision:6.5, redondeo:100, fact:{tipo:'',ptoVta:'',cuit:''},
   tardeDesde:14, nocheDesde:19, nocheHasta:2, comision:25, noches:30, cbu:'DK7MP20LV9R1N4Q8X2C5ZB', combosOff:[], regaloAnticipo:'ACC01', regaloSiempre:'ACC02', vasosPorPersona:2, vasosMax:10, regaloPresu:60000, regaloHabitue:1500,
@@ -3117,3 +3140,11 @@ function maybeSeed(){
 }
 boot();
 </script>
+
+<script>
+/* modo instalable: guarda la app para abrirla sin conexión; se actualiza sola al haber versión nueva */
+if('serviceWorker' in navigator&&location.protocol!=='file:'){
+  window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+}
+</script>
+</html>
