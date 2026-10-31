@@ -13,6 +13,36 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* Fuera del artifact no existe window.claude: este puente le da a la app la misma base (Firestore)
+   y un "usuario" mínimo. La app habla con la base con doc/collection/orderBy/limit/onSnapshot, igual que Firestore. */
+(function(){
+  try{
+    firebase.initializeApp({"apiKey": "AIzaSyD_UNxihGSgznjsf6XdGFyBHgzi1QIjvEE", "authDomain": "drinkin-pruebas.firebaseapp.com", "projectId": "drinkin-pruebas", "storageBucket": "drinkin-pruebas.firebasestorage.app", "messagingSenderId": "277671681191", "appId": "1:277671681191:web:435c262cf8e962e06fcf82"});
+    var db=firebase.firestore();
+    db.settings({ignoreUndefinedProperties:true});
+    db.enablePersistence({synchronizeTabs:true}).catch(function(){});
+    /* No creer un "vacío" que viene del guardado del celular: si la app lo tomara por base vacía,
+       cargaría los datos de muestra encima de los datos que ya hay en la nube. Solo cuenta el vacío confirmado por el servidor. */
+    [firebase.firestore.DocumentReference,firebase.firestore.Query].forEach(function(K){
+      var o=K.prototype.onSnapshot;
+      K.prototype.onSnapshot=function(){
+        var a=[].slice.call(arguments);
+        if(typeof a[0]==='function'){var next=a[0];a[0]=function(sn){if(sn.metadata&&sn.metadata.fromCache&&(sn.exists===false||sn.empty===true))return;next(sn)}}
+        return o.apply(this,a);
+      };
+    });
+    var id;try{id=localStorage.getItem('dk-dev');if(!id){id='d'+Math.random().toString(36).slice(2,12);localStorage.setItem('dk-dev',id)}}catch(e){id='d0'}
+    window.claude={use:function(n){
+      if(n==='db')return Promise.resolve(db);
+      if(n==='user')return Promise.resolve({canEdit:function(){return Promise.resolve(true)},isOwner:function(){return Promise.resolve(false)},id:function(){return Promise.resolve(id)}});
+      return Promise.reject(new Error('sin '+n));
+    }};
+  }catch(e){console.error('Firebase no arrancó',e)}
+})();
+</script>
 <style>
 /* base que en el artifact pone el publicador: márgenes seguros del celular */
 html{color-scheme:light}

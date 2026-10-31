@@ -1,7 +1,7 @@
 # Drink'In Livery · versión de prueba instalable
 
 Copia pública de la app **con datos de muestra**. No tiene clientes, caja ni claves reales.
-Cada celular ve sus propios datos de muestra (no se comparten entre dispositivos) y al recargar vuelven al inicio.
+Los datos se guardan en un proyecto de Firebase de pruebas (`drinkin-pruebas`), así que todos los celulares ven lo mismo en tiempo real. Son datos de muestra y de prueba. La primera vez que alguien abre la app con la base vacía, ella misma carga los datos de muestra.
 
 **Claves de demostración:** Gonza 1111 · Manu 2222 · rider Tomi 2468 · compartida 1234.
 
