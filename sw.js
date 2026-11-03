@@ -1,5 +1,5 @@
-/* Drink'In · service worker (versión e5a5d405). Red primero para la app, guardado como respaldo. */
-const V='dk-e5a5d405',SHELL=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','apple-touch-icon.png'];
+/* Drink'In · service worker (versión 834ad97d). Red primero para la app, guardado como respaldo. */
+const V='dk-834ad97d',SHELL=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','apple-touch-icon.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{
